@@ -1,26 +1,16 @@
 const MIN_LENGTH = 1;
 const MAX_LENGTH = 1000;
 
-function isArrayNumbersValid(userAddNum) {
-    const numbers = parseInt(userAddNum, 10);
-
-    if (userAddNum === null) {
+function isArrayNumbersValid(userInput) {
+    if (userInput === null) {
         alert('Окей, дякуємо за відвідування сайту!');
         return false;
     }
 
-    if (!userAddNum.trim() || numbers <= 0 || !Number.isInteger(numbers)) {
-        alert('Помилка, будь ласка введіть ще раз число');
-        return false;
-    }
+    const userArray = userInput.split(/[,\s]+/).map(element => parseFloat(element.trim()));
 
-    if (numbers < MIN_LENGTH) {
-        alert('Короткий масив');
-        return false;
-    }
-
-    if (numbers > MAX_LENGTH) {
-        alert('Занадто велика кількість чисел');
+    if (!userArray.every(isFinite) || userArray.length < MIN_LENGTH || userArray.length > MAX_LENGTH) {
+        alert('Помилка. Будь ласка, введіть коректні дані для всіх елементів.');
         return false;
     }
 
@@ -28,17 +18,10 @@ function isArrayNumbersValid(userAddNum) {
 }
 
 function arrayNumber() {
-    const userAddNum = prompt('Введіть будь ласка кількість чисел та всі елементи через пробіл');
+    const userInput = prompt('Введіть всі елементи через кому та/або пробіл (наприклад, "2,3 ,5")', '2,3 ,5');
 
-    if (isArrayNumbersValid(userAddNum)) {
-        const numbers = parseInt(userAddNum, 10);
-        const userInput = prompt('Введіть всі елементи через пробіл');
-        const userArray = userInput.split(' ').map(element => Number(element));
-
-        if (userArray.length !== numbers || userArray.some(isNaN)) {
-            alert('Помилка. Будь ласка, введіть коректні дані для всіх елементів.');
-            return;
-        }
+    if (isArrayNumbersValid(userInput)) {
+        const userArray = userInput.split(/[,\s]+/).map(element => parseFloat(element.trim()));
 
         userArray.sort((a, b) => a - b);
         alert('Введені елементи користувача: ' + userArray.join(', '));
@@ -49,9 +32,7 @@ function arrayNumber() {
 
 arrayNumber();
 
-
-for(let i = 10; i > 0 ;i--){
-    if(i==2)break
-    
-    console.log(i)
+for (let i = 10; i >= 0; i--) {
+    console.log(i);
 }
+
